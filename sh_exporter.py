@@ -24,6 +24,7 @@ def create_metric(name, metric_type, description, labels):
 
 
 def update_metric(name, metric_type, description, cmd, labels):
+    pass
 
 
 def read_conf(yml_path):
@@ -52,6 +53,7 @@ def update_metrics():
 
 @app.route('/metrics')
 def metrics():
+    update_metrics()
     return Response(prometheus_client.generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
 
