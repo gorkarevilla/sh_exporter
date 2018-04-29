@@ -1,0 +1,16 @@
+---
+sh:
+  - name: 'users'
+    type: 'gauge'
+    description: 'Number of users logged in the system'
+    cmd: 'who | wc -l'
+
+  - name: 'web_instances_chrome'
+    type: 'gauge'
+    description: 'Number of chrome instances running'
+    cmd: 'ps -ef | grep chrome | wc -l'
+
+  - name: 'process_running'
+    type: 'gauge'
+    description: 'Number of process running'
+    cmd: 'ps -ef | wc -l'
