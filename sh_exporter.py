@@ -51,4 +51,4 @@ def metrics():
 
 if __name__ == '__main__':
     read_conf(CONF_YAML)
-    app.run(port=PORT, debug=DEBUG)
+    app.run(host='0.0.0.0', port=PORT, debug=DEBUG)
