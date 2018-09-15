@@ -47,11 +47,17 @@ def read_conf(yml_path):
 
 def update_metrics():
     for name, description, job, instance, cmd in Gauges:
-        cmd_output = check_output(cmd, shell=True)
+        cmd_output = 0
+        try:
+            cmd_output = check_output(cmd, shell=True)
+        except:
+            print 'ERROR: CMD {cmd} can not be executed'.format(cmd=cmd)
+
+        value = 0
         try:
             value = int(cmd_output)
-        except ValueError:
-            raise ValueError('Output of CMD {cmd} is not a integer: {output}'.format(cmd=cmd, output=cmd_output))
+        except:
+            print 'ERROR: Output of CMD {cmd} is not a integer: {output}'.format(cmd=cmd, output=cmd_output)
 
         url = 'http://{server}:{port}/metrics/job/{job}/instance/{instance}'.format(server=Server, port=Port, job=job,
                                                                              instance=instance)
@@ -60,7 +66,7 @@ def update_metrics():
         r = requests.post(url=url, data=data, headers={'Content-Type': 'text/plain'})
 
         if r.status_code != 202:
-            print 'Error. Request {request} returns {code} code.'.format(request=r.url, code=r.status_code)
+            print 'ERROR: Request {request} returns {code} code.'.format(request=r.url, code=r.status_code)
 
 
 if __name__ == '__main__':
